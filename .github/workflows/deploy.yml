@@ -6,9 +6,8 @@ on:
       - main
 
 env:
-  AWS_REGION: us-east-1
-  LAMBDA_FUNCTION_NAME: normal
-  AWS_ROLE_TO_ASSUME: arn:aws:iam::140023404662:role/normal-role-efqu9sk5
+  AWS_REGION: eu-central-1
+  LAMBDA_FUNCTION_NAME: twentyfour
 
 permissions:
   id-token: write
@@ -41,5 +40,8 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
-          role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
-          role-session-name: GitHubActionsLambdaDeployment
+
+      - name: Zip Lambda function
+        run: zip function.zip lambda_function.py
+
+      # (Add deploy logic here, like aws lambda update-function-code...)
